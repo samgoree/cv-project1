@@ -7,6 +7,19 @@ using namespace cv;
 Mat photo;
 VideoCapture cap;
 
+Mat processFrame(Mat photo) {
+	/*
+	Processing function for each frame of video
+	*/
+	
+}
+
+Mat processPhoto(Mat photo) {
+	/*
+	Processing function for each photo
+	*/
+}
+
 int main(int argc, char** argv)
 {
 	// this should work
@@ -22,20 +35,23 @@ int main(int argc, char** argv)
 		cout << "cannot open camera";
 	}
 
-	Mat image;
+	Mat frame, photo;
 	namedWindow("Webcam");
 	namedWindow("Photo");
 	int k;
 	// infinite loop
 	while (true) {
 		// get a camera frame
-		cap.read(image);
+		cap.read(frame);
 		// show it
-		imshow("Webcam", image);
+		frame = processFrame(frame);
+		imshow("Webcam", frame);
 		// wait 25ms for a keypress and save its integer value
 		k = waitKey(25); 
 		if (k % 256 == 32) { // space bar
-			imshow("Photo", image);
+			photo = frame.clone();
+			photo = processPhoto(photo);
+			imshow("Photo", photo);
 		}
 		else if (k % 256 == 27) { // backspace
 			break;
